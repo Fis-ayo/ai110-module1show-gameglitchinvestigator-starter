@@ -19,7 +19,8 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
 AI suggested the switching of the statements of the if-else statements as a response to an issue I had presented.
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
-
+AI had suggested reseting some variables in regards to the New Game bugs. It seemed the suggestions made sense as there were some hardcoded values per the difficulty range. However, it suggested initializing some values which raised a streamlit exception.
+I had previously accepted the solution as it seemed to be going in the right direction to fix the bug.
 ---
 
 ## 3. Debugging and testing your fixes
