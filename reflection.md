@@ -10,6 +10,7 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
   - Guessing instructions are not changing according to the difficulty level
   - Number attemps isn't defined for difficulty levels
   - New Game button does not restart the game
+  Scores after each game is always negative and low indicating a possible error with its logic
 
 ---
 
