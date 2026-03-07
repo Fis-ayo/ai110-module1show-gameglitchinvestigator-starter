@@ -19,14 +19,13 @@ def parse_guess(raw: str):
     if raw is None:
         return False, None, "Enter a guess."
 
-    if raw == "":
+    text = str(raw).strip()
+
+    if text == "":
         return False, None, "Enter a guess."
 
     try:
-        if "." in raw:
-            value = int(float(raw))
-        else:
-            value = int(raw)
+        value = int(text)
     except Exception:
         return False, None, "That is not a number."
 
