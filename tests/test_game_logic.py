@@ -1,4 +1,4 @@
-from logic_utils import check_guess, update_score
+from logic_utils import check_guess, parse_guess, update_score
 
 
 def test_winning_guess():
@@ -39,3 +39,24 @@ def test_update_score_too_high_penalty_is_consistent():
 def test_update_score_too_low_penalty_is_minus_five():
     score = update_score(current_score=0, outcome="Too Low", attempt_number=3)
     assert score == -5
+
+
+def test_parse_guess_accepts_integer_input():
+    ok, guess, err = parse_guess("42")
+    assert ok is True
+    assert guess == 42
+    assert err is None
+
+
+def test_parse_guess_rejects_empty_input():
+    ok, guess, err = parse_guess("   ")
+    assert ok is False
+    assert guess is None
+    assert err == "Enter a guess."
+
+
+def test_parse_guess_rejects_decimal_input():
+    ok, guess, err = parse_guess("12.9")
+    assert ok is False
+    assert guess is None
+    assert err == "That is not a number."
