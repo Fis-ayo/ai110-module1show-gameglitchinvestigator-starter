@@ -96,10 +96,13 @@ if st.session_state.status != "playing":
     st.stop()
 
 if submit:
-    ok, guess_int, err = parse_guess(raw_guess)
+    ok, guess_int, err = parse_guess(raw_guess, low=low, high=high)
 
     if not ok:
-        st.session_state.history.append(raw_guess)
+        history_entry = "" if raw_guess is None else str(raw_guess)
+        if len(history_entry) > 60:
+            history_entry = history_entry[:57] + "..."
+        st.session_state.history.append(history_entry)
         st.error(err)
     else:
         st.session_state.attempts += 1
