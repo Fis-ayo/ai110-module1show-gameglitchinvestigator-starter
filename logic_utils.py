@@ -1,3 +1,6 @@
+import re
+
+
 # FIX: Refactored logic into logic_utils.py using Copilot Agent mode
 def get_range_for_difficulty(difficulty: str):
     """Return (low, high) inclusive range for a given difficulty."""
@@ -10,7 +13,7 @@ def get_range_for_difficulty(difficulty: str):
     return 1, 100
 
 
-def parse_guess(raw: str):
+def parse_guess(raw: str, low: int = None, high: int = None, max_length: int = 20):
     """
     Parse user input into an int guess.
 
@@ -24,10 +27,21 @@ def parse_guess(raw: str):
     if text == "":
         return False, None, "Enter a guess."
 
+    if len(text) > max_length:
+        return False, None, f"Input is too long (max {max_length} chars)."
+
+    # Restrict to ASCII integer format to avoid locale/unicode ambiguity.
+    if re.fullmatch(r"[+-]?[0-9]+", text) is None:
+        return False, None, "That is not a valid whole number."
+
     try:
         value = int(text)
     except Exception:
-        return False, None, "That is not a number."
+        return False, None, "That is not a valid whole number."
+
+    if low is not None and high is not None:
+        if value < low or value > high:
+            return False, None, f"Enter a number between {low} and {high}."
 
     return True, value, None
 
