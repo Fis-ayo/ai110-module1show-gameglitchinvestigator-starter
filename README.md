@@ -43,11 +43,11 @@ The game is a guessing game where users have options between a range of numbers 
 
 ## 📸 Demo
 
-- [X] <img width="1080" height="421" alt="Image" src="https://github.com/user-attachments/assets/e617e57c-a4e2-463e-974b-5a2760faca88" />
+- [X] <img width="1138" height="648" alt="Image" src="https://github.com/user-attachments/assets/61a0a7d6-d8a3-4835-bd29-21d20e5e6c92" />
 <img width="1258" height="648" alt="Image" src="https://github.com/user-attachments/assets/90e10b86-98bb-4f02-a386-d0f0512dce3b" />
 
 
 
 ## 🚀 Stretch Features
 
-- [ ] [If you choose to complete Challenge 4, insert a screenshot of your Enhanced Game UI here]
+<img width="1257" height="719" alt="Image" src="https://github.com/user-attachments/assets/d0773be9-ae68-424c-aa9b-be622a59c58d" />
