@@ -25,6 +25,22 @@ attempt_limit = attempt_limit_map[difficulty]
 low, high = get_range_for_difficulty(difficulty)
 
 
+def get_proximity_label(guess: int, secret: int, low: int, high: int) -> str:
+    """Return an emoji + label based on how close the guess is to the secret."""
+    distance = abs(guess - secret)
+    span = max(high - low, 1)
+    ratio = distance / span
+    if ratio <= 0.05:
+        return "🔥 Burning Hot"
+    if ratio <= 0.15:
+        return "♨️ Hot"
+    if ratio <= 0.30:
+        return "🌡️ Warm"
+    if ratio <= 0.50:
+        return "🧊 Cold"
+    return "❄️ Freezing"
+
+
 def reset_game() -> None:
     st.session_state.attempts = 0
     st.session_state.secret = random.randint(low, high)
@@ -106,20 +122,33 @@ if submit:
         st.error(err)
     else:
         st.session_state.attempts += 1
-        st.session_state.history.append(guess_int)
-
         secret = st.session_state.secret
 
         outcome, message = check_guess(guess_int, secret)
+        proximity = get_proximity_label(guess_int, secret, low, high)
 
         if show_hint:
-            st.warning(message)
+            if outcome == "Win":
+                st.success(f"🎯 {message}")
+            elif "Hot" in proximity or "Warm" in proximity:
+                st.warning(f"{message} — {proximity}")
+            else:
+                st.info(f"{message} — {proximity}")
 
+        score_before = st.session_state.score
         st.session_state.score = update_score(
             current_score=st.session_state.score,
             outcome=outcome,
             attempt_number=st.session_state.attempts,
         )
+        score_delta = st.session_state.score - score_before
+
+        st.session_state.history.append({
+            "Guess": guess_int,
+            "Outcome": outcome,
+            "Proximity": "🎯 Exact!" if outcome == "Win" else proximity,
+            "Score Δ": f"{score_delta:+d}",
+        })
 
         if outcome == "Win":
             st.balloons()
@@ -138,4 +167,10 @@ if submit:
                 )
 
 st.divider()
+
+valid_entries = [e for e in st.session_state.history if isinstance(e, dict)]
+if valid_entries:
+    st.subheader("📊 Session Summary")
+    st.table(valid_entries)
+
 st.caption("Built by an AI that claims this code is production-ready.")
