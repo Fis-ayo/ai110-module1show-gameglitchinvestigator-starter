@@ -59,4 +59,32 @@ def test_parse_guess_rejects_decimal_input():
     ok, guess, err = parse_guess("12.9")
     assert ok is False
     assert guess is None
-    assert err == "That is not a number."
+    assert err == "That is not a valid whole number."
+
+
+def test_parse_guess_rejects_out_of_range_integer():
+    ok, guess, err = parse_guess("999", low=1, high=100)
+    assert ok is False
+    assert guess is None
+    assert err == "Enter a number between 1 and 100."
+
+
+def test_parse_guess_rejects_overly_long_input():
+    ok, guess, err = parse_guess("9" * 25, max_length=20)
+    assert ok is False
+    assert guess is None
+    assert err == "Input is too long (max 20 chars)."
+
+
+def test_parse_guess_rejects_unicode_numeric_forms():
+    ok, guess, err = parse_guess("٤٢")
+    assert ok is False
+    assert guess is None
+    assert err == "That is not a valid whole number."
+
+
+def test_parse_guess_rejects_comma_formatted_number():
+    ok, guess, err = parse_guess("1,000")
+    assert ok is False
+    assert guess is None
+    assert err == "That is not a valid whole number."
